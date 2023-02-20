@@ -1,5 +1,5 @@
 import {get_t} from './time'
-
+import { get_multiples_in_range } from './math_utility';
 let canvas = document.getElementById('canvas') as
                 HTMLCanvasElement;
 canvas.width = .9*window.innerWidth
@@ -37,7 +37,7 @@ class CanvasPosition{
     }
 
     pixel_y(){
-        return canvas.height*this.y_frac
+        return canvas.height*(1-this.y_frac)
     }
 }
 
@@ -64,12 +64,13 @@ class CanvasLine implements Drawable{
         c.stroke();
     }
 
-    static horizontal_line(y_frac:number){
-        return new CanvasLine(new CanvasPosition(0,y_frac),new CanvasPosition(1,y_frac))
+
+    static horizontal_line(y_frac:number, line_width:number = 2, stroke_style:string = 'black'){
+        return new CanvasLine(new CanvasPosition(0,y_frac),new CanvasPosition(1,y_frac), line_width, stroke_style)
     }
 
-    static vertical_line(x_frac:number){
-        return new CanvasLine(new CanvasPosition(x_frac,0),new CanvasPosition(x_frac,1))
+    static vertical_line(x_frac:number, line_width:number = 2, stroke_style:string = 'black'){
+        return new CanvasLine(new CanvasPosition(x_frac,0),new CanvasPosition(x_frac,1) , line_width, stroke_style)
     }
 }
 
@@ -93,15 +94,79 @@ class LabledLine implements Drawable{
 
 }
 
-
-
-for (let index = 0; index < 10; index++) {
-    CanvasLine.horizontal_line(index*.1).draw()
-    new LabledLine(String(index), new CanvasPosition(0, index*.1), 20).draw()
-    CanvasLine.vertical_line(index*.1).draw()
-    new LabledLine(String(index), new CanvasPosition(index*.1, 1), 20).draw()
-
+function get_labled_horizontal_line(y_frac:number, label:string, color:string){
+    CanvasLine.horizontal_line(y_frac, 2, color).draw()
+    return new LabledLine(label, new CanvasPosition(0, y_frac), 20)
 }
+
+function get_labled_vertical_line(x_frac:number, label:string, color: string){
+    CanvasLine.vertical_line(x_frac, 2, color).draw()
+    return new LabledLine(label, new CanvasPosition(x_frac,0), 20)
+}
+
+class RealPosition{
+    x: number;
+    y: number;
+    constructor(x:number, y:number){
+        this.x = x
+        this.y = y
+    }
+
+    to_canvas_position(view_info:ViewOfPlane){
+        var x_frac = .5 + (this.x-view_info.center_point.x)/view_info.x_axis_length
+        var y_frac = .5 + (this.y-view_info.center_point.y)/view_info.y_axis_length
+        return new CanvasPosition(x_frac, y_frac)
+    }
+}
+
+class ViewOfPlane{
+    center_point  : RealPosition;
+    x_axis_length: number;
+    y_axis_length: number;
+    y_grid_line_resolution:number;
+
+    x_grid_line_resolution:number;
+    constructor(center_point: RealPosition, x_axis_length: number, y_axis_length: number){
+        this.center_point = center_point 
+        this.x_axis_length = x_axis_length
+        this.y_axis_length = y_axis_length
+        this.x_grid_line_resolution = 5
+        this.y_grid_line_resolution = 5
+    }
+
+    x_max(){
+        return this.center_point.x + this.x_axis_length/2
+    }
+
+    x_min(){
+        return this.center_point.x - this.x_axis_length/2
+    }
+    y_max(){
+        return this.center_point.y + this.y_axis_length/2
+    }
+
+    y_min(){
+        return this.center_point.y - this.y_axis_length/2
+    }
+
+
+    draw(){
+        get_multiples_in_range(this.x_grid_line_resolution, this.x_min(), this.x_max()).forEach(x_intercept => {
+            var x_frac = new RealPosition(x_intercept,0).to_canvas_position(this).x_frac 
+
+            get_labled_vertical_line(x_frac, String(x_intercept), x_intercept == 0? 'black': '#d3d3d3').draw()   
+        });
+
+        get_multiples_in_range(this.y_grid_line_resolution, this.y_min(), this.y_max()).forEach(y_intercept => {
+            var y_frac = new RealPosition(y_intercept,0).to_canvas_position(this).x_frac 
+            get_labled_horizontal_line(y_frac, String(y_intercept),  y_intercept == 0? 'black': '#d3d3d3').draw()   
+        });
+
+    }
+}
+
+
+new ViewOfPlane(new RealPosition(0,0), 100, 100).draw()
 
 // function animate(){
 //     requestAnimationFrame(animate)
