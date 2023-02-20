@@ -1,4 +1,4 @@
-
+import {get_t} from './time'
 
 let canvas = document.getElementById('canvas') as
                 HTMLCanvasElement;
@@ -18,26 +18,13 @@ canvas.addEventListener('mousedown', function(e) {
 })
 
 
-let start_seconds = new Date()
-
-function get_seconds(time: Date){
-    return time.getSeconds()+ time.getMilliseconds()/1000
-}
-
-function current_t() {
-    return get_seconds(new Date()) - get_seconds(start_seconds)
-}
-
-
 
 function animate(){
-   
     requestAnimationFrame(animate)
     c.clearRect(0,0,innerWidth, innerHeight)
-    var seconds = current_t()
+    var seconds = get_t()
     c.fillStyle = "rgb(200, 0, 0)";
     c.fillRect((100*seconds+ 100*Math.sin(6*seconds))%canvas.width, (100*seconds) %canvas.height, 5, 5);
-
 }
 
 animate()
