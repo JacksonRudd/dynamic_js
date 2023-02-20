@@ -6,6 +6,17 @@ canvas.width = .9*window.innerWidth
 canvas.height = .9*window.innerHeight
 let c = canvas.getContext("2d")!;
 
+function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    console.log("x: " + x + " y: " + y)
+}
+
+canvas.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas, e)
+})
+
 
 let start_seconds = new Date()
 
@@ -16,6 +27,7 @@ function get_seconds(time: Date){
 function current_t() {
     return get_seconds(new Date()) - get_seconds(start_seconds)
 }
+
 
 
 function animate(){
