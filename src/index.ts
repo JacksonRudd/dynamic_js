@@ -6,16 +6,7 @@ canvas.width = .9*window.innerWidth
 canvas.height = .9*window.innerHeight
 let c = canvas.getContext("2d")!;
 
-function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
-    const rect = canvas.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    const y = event.clientY - rect.top
-    console.log("x: " + x + " y: " + y)
-}
 
-canvas.addEventListener('mousedown', function(e) {
-    getCursorPosition(canvas, e)
-})
 
 
 interface Drawable{
@@ -46,14 +37,17 @@ class CanvasLine implements Drawable{
     p2: CanvasPosition
     line_width: number;
     stroke_style: string;
+    draw_order: number; //the higher draw order the later it will be drawn
 
-    constructor(p1:CanvasPosition,p2: CanvasPosition, line_width:number = 2, stroke_style:string = 'black'){
+    constructor(p1:CanvasPosition,p2: CanvasPosition, line_width:number = 2, stroke_style:string = 'black', draw_order = 0){
         this.p1 = p1
         this.p2 = p2
         this.line_width = line_width
-        this.stroke_style = stroke_style
-        
+        this.stroke_style = stroke_style   
+        this.draw_order = draw_order
     }
+
+    
 
     draw(){
         c.strokeStyle = this.stroke_style;
@@ -74,7 +68,7 @@ class CanvasLine implements Drawable{
     }
 }
 
-class LabledLine implements Drawable{
+class Lable implements Drawable{
     label: string;
     bottom_left: CanvasPosition;
     pixels: number;
@@ -94,14 +88,32 @@ class LabledLine implements Drawable{
 
 }
 
-function get_labled_horizontal_line(y_frac:number, label:string, color:string){
-    CanvasLine.horizontal_line(y_frac, 2, color).draw()
-    return new LabledLine(label, new CanvasPosition(0, y_frac), 20)
+
+class LabledLine implements Drawable{
+    line: CanvasLine;
+    label: Lable;
+    constructor(label:Lable, line: CanvasLine){
+        this.label = label
+        this.line = line
+    }
+    draw(): void {
+        this.line.draw()
+        this.label.draw()
+    }
+    
+}
+function get_labled_horizontal_line(y_frac:number, label_string:string, color:string, draw_order = 0): LabledLine{
+    var line = CanvasLine.horizontal_line(y_frac, 2, color)
+    line.draw_order = draw_order
+    var lable = new Lable(label_string, new CanvasPosition(0, y_frac), 20)
+    return new LabledLine(lable, line)
 }
 
-function get_labled_vertical_line(x_frac:number, label:string, color: string){
-    CanvasLine.vertical_line(x_frac, 2, color).draw()
-    return new LabledLine(label, new CanvasPosition(x_frac,0), 20)
+function get_labled_vertical_line(x_frac:number, label_string:string, color: string, draw_order = 0): LabledLine{
+    var line = CanvasLine.vertical_line(x_frac, 2, color)
+    line.draw_order = draw_order
+    var lable = new Lable(label_string, new CanvasPosition(x_frac,0), 20)
+    return new LabledLine(lable, line)
 }
 
 class RealPosition{
@@ -151,22 +163,41 @@ class ViewOfPlane{
 
 
     draw(){
-        get_multiples_in_range(this.x_grid_line_resolution, this.x_min(), this.x_max()).forEach(x_intercept => {
+        var x_intercepts = get_multiples_in_range(this.x_grid_line_resolution, this.x_min(), this.x_max())
+        var y_intercepts = get_multiples_in_range(this.y_grid_line_resolution, this.y_min(), this.y_max())
+        var lines: LabledLine[]= []
+        x_intercepts.forEach(x_intercept => {
             var x_frac = new RealPosition(x_intercept,0).to_canvas_position(this).x_frac 
-
-            get_labled_vertical_line(x_frac, String(x_intercept), x_intercept == 0? 'black': '#d3d3d3').draw()   
+            lines.push( get_labled_vertical_line(x_frac, String(x_intercept), x_intercept == 0? 'black': '#d3d3d3',x_intercept == 0? 1: 0 ))   
         });
 
-        get_multiples_in_range(this.y_grid_line_resolution, this.y_min(), this.y_max()).forEach(y_intercept => {
+        
+        y_intercepts.forEach(y_intercept => {
             var y_frac = new RealPosition(y_intercept,0).to_canvas_position(this).x_frac 
-            get_labled_horizontal_line(y_frac, String(y_intercept),  y_intercept == 0? 'black': '#d3d3d3').draw()   
+            lines.push(get_labled_horizontal_line(y_frac, String(y_intercept),  y_intercept == 0? 'black': '#d3d3d3'))
         });
 
+        lines.sort((a,b) => a.line.draw_order - b.line.draw_order)
+        lines.forEach(element => {
+            element.draw()
+        });
     }
 }
 
 
-new ViewOfPlane(new RealPosition(0,0), 100, 100).draw()
+var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100)
+plane.draw()
+
+function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
+    const rect = canvas.getBoundingClientRect()
+    const x = event.clientX - rect.left
+    const y = event.clientY - rect.top
+    console.log("x: " + x + " y: " + y)
+}
+
+canvas.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas, e)
+})
 
 // function animate(){
 //     requestAnimationFrame(animate)
