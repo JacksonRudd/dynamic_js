@@ -1,4 +1,5 @@
 import { get_multiples_in_range } from './math_utility';
+import { RealPosition } from './real';
 
 export class CanvasInfo{
     canvas:HTMLCanvasElement
@@ -210,16 +211,7 @@ class LabledLine implements Drawable{
 
 
 
-export class RealPosition{
-    x: number;
-    y: number;
-    constructor(x:number, y:number){
-        this.x = x
-        this.y = y
-    }
 
-
-}
 
 export class ViewOfPlane{
     center_point  : RealPosition;
