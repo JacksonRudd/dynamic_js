@@ -1,8 +1,8 @@
 import {get_t} from './time'
-import { ViewOfPlane, CanvasInfo, Drawable } from './draw';
+import { ViewOfPlane, CanvasInfo, Drawable } from './view/draw';
 import { RealPosition } from './real';
 
-import {display} from './display_function'
+import {display} from './view/display_function'
 
 var real_scene: RealPosition[] = []
 

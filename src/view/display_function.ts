@@ -1,6 +1,6 @@
-import {get_t} from './time'
+import {get_t} from '../time'
 import { ViewOfPlane, CanvasInfo, Drawable } from './draw';
-import { RealPosition } from './real';
+import { RealPosition } from '../real';
 
 export function display(real_scene: RealPosition[], canvas: HTMLCanvasElement ){
     canvas.width = .95*window.innerWidth

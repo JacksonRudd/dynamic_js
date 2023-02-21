@@ -1,5 +1,5 @@
-import { get_multiples_in_range } from './math_utility';
-import { RealPosition } from './real';
+import { get_multiples_in_range } from '../math_utility';
+import { RealPosition } from '../real';
 
 export class CanvasInfo{
     canvas:HTMLCanvasElement
