@@ -1,31 +1,53 @@
 import {get_t} from './time'
 import { ViewOfPlane, RealPosition, CanvasInfo, Drawable } from './draw';
-let canvas2 = document.getElementById('canvas') as
-                HTMLCanvasElement;
-canvas2.width = .9*window.innerWidth
-canvas2.height = .9*window.innerHeight
-let c = canvas2.getContext("2d")!;
 
-var canvas_info = new CanvasInfo(canvas2)
-var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100, canvas_info)
-var some_point = new RealPosition(3,3)
-var colored_point = canvas_info.to_cavas_colored_point(some_point, plane, 'red', 2,)
 
-var drawable_things: Drawable[] = []
 
-drawable_things.push(plane)
-drawable_things.push(colored_point)
+var real_scene: RealPosition[] = []
 
-function draw(){
-    drawable_things.forEach(element => {
-        element.draw(c)
-    });
+
+for (let i = 0; i < 100000; i++) {
+    var randomNum1 = Math.floor(Math.random() * (1000 - (-1000) + 1)) + (-1000);
+    var randomNum2 = Math.floor(Math.random() * (1000 - (-1000) + 1)) + (-1000);
+    real_scene.push(new RealPosition(randomNum1, -randomNum2))
 }
 
 
 
 
 
+
+
+// Display
+
+let canvas = document.getElementById('canvas') as
+                HTMLCanvasElement;
+canvas.width = .95*window.innerWidth
+canvas.height = .95*window.innerHeight
+let c = canvas.getContext("2d")!;
+
+
+var canvas_info = new CanvasInfo(canvas)
+var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100, canvas_info)
+
+var drawable_things: Drawable[] = []
+drawable_things.push(plane)
+
+
+real_scene.forEach(element => {
+    var colored_point = canvas_info.to_cavas_colored_point(element, plane, 'red', 3)
+    drawable_things.push(colored_point)
+
+});
+
+
+
+
+function draw(){
+    drawable_things.forEach(element => {
+        element.draw(c)
+    });
+}
 
 
 function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
@@ -35,8 +57,8 @@ function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
     console.log("x: " + x + " y: " + y)
 }
 
-canvas2.addEventListener('mousedown', function(e) {
-    getCursorPosition(canvas2, e)
+canvas.addEventListener('mousedown', function(e) {
+    getCursorPosition(canvas, e)
 })
 
 
@@ -67,9 +89,12 @@ document.addEventListener("keydown", function(event) {
   
 function animate(){
     requestAnimationFrame(animate)
+    real_scene.forEach(element => {
+        element.x = element.x + element.y*Math.sin(get_t())/10
+        element.y = element.y -element.x/10
+    });
     c.clearRect(0,0,innerWidth, innerHeight)
-    some_point.x = 10*Math.sin(get_t())
-    some_point.y = 10*Math.cos(get_t())
+
     draw()
     
 }
