@@ -180,7 +180,7 @@ class ViewOfPlane{
 }
 
 
-var plane = new ViewOfPlane(new RealPosition(40,0), 100, 100)
+var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100)
 plane.draw()
 
 function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
@@ -195,19 +195,20 @@ canvas.addEventListener('mousedown', function(e) {
 })
 
 
-// document.addEventListener("keydown", function(event) {
-//     if (event.key === "ArrowUp") {
-//       plane.center_point.y += 10
-//       c.clearRect(0,0,innerWidth, innerHeight)
-//       plane.draw()
-//     } else if (event.key === "ArrowDown") {
-//       console.log("D");
-//     } else if (event.key === "ArrowLeft") {
-//       console.log("L");
-//     } else if (event.key === "ArrowRight") {
-//       console.log("R");
-//     }
-//   });
+document.addEventListener("keydown", function(event) {
+    var vel = 1
+    if (event.key === "ArrowUp") {
+      plane.center_point.y += vel
+    } else if (event.key === "ArrowDown") {
+        plane.center_point.y -= vel
+    } else if (event.key === "ArrowLeft") {
+        plane.center_point.x -= vel
+    } else if (event.key === "ArrowRight") {
+        plane.center_point.x += vel
+    }
+    c.clearRect(0,0,innerWidth, innerHeight)
+    plane.draw()
+  });
   
 // function animate(){
 //     requestAnimationFrame(animate)
