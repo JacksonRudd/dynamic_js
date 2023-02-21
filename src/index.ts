@@ -13,7 +13,6 @@ interface Drawable{
     draw():void
 }
 
-// draw a red line
 
 class CanvasPosition{
     x_frac: number
@@ -47,8 +46,6 @@ class CanvasLine implements Drawable{
         this.draw_order = draw_order
     }
 
-    
-
     draw(){
         c.strokeStyle = this.stroke_style;
         c.lineWidth = this.line_width;
@@ -57,7 +54,6 @@ class CanvasLine implements Drawable{
         c.lineTo(this.p2.pixel_x(), this.p2.pixel_y());
         c.stroke();
     }
-
 
     static horizontal_line(y_frac:number, line_width:number = 2, stroke_style:string = 'black'){
         return new CanvasLine(new CanvasPosition(0,y_frac),new CanvasPosition(1,y_frac), line_width, stroke_style)
@@ -171,9 +167,8 @@ class ViewOfPlane{
             lines.push( get_labled_vertical_line(x_frac, String(x_intercept), x_intercept == 0? 'black': '#d3d3d3',x_intercept == 0? 1: 0 ))   
         });
 
-        
         y_intercepts.forEach(y_intercept => {
-            var y_frac = new RealPosition(y_intercept,0).to_canvas_position(this).x_frac 
+            var y_frac = new RealPosition(0, y_intercept).to_canvas_position(this).y_frac 
             lines.push(get_labled_horizontal_line(y_frac, String(y_intercept),  y_intercept == 0? 'black': '#d3d3d3'))
         });
 
@@ -185,7 +180,7 @@ class ViewOfPlane{
 }
 
 
-var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100)
+var plane = new ViewOfPlane(new RealPosition(40,0), 100, 100)
 plane.draw()
 
 function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
@@ -199,6 +194,21 @@ canvas.addEventListener('mousedown', function(e) {
     getCursorPosition(canvas, e)
 })
 
+
+// document.addEventListener("keydown", function(event) {
+//     if (event.key === "ArrowUp") {
+//       plane.center_point.y += 10
+//       c.clearRect(0,0,innerWidth, innerHeight)
+//       plane.draw()
+//     } else if (event.key === "ArrowDown") {
+//       console.log("D");
+//     } else if (event.key === "ArrowLeft") {
+//       console.log("L");
+//     } else if (event.key === "ArrowRight") {
+//       console.log("R");
+//     }
+//   });
+  
 // function animate(){
 //     requestAnimationFrame(animate)
 //     c.clearRect(0,0,innerWidth, innerHeight)
