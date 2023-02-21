@@ -15,7 +15,7 @@ export class CanvasInfo{
     }
 
     new_canvas_position(x:number,y:number){
-        return new CanvasPosition(this, x,y)
+        return new FixedCanvasPosition(this, x,y)
     }
 
     horizontal_line(y_frac:number, line_width:number = 2, stroke_style:string = 'black'){
@@ -40,47 +40,119 @@ export class CanvasInfo{
         return new LabledLine(lable, line)
     }
 
-    to_canvas_position(real_position:RealPosition, view_info:ViewOfPlane){
-        var x_frac = .5 + (real_position.x-view_info.center_point.x)/view_info.x_axis_length
-        var y_frac = .5 + (real_position.y-view_info.center_point.y)/view_info.y_axis_length
-        return this.new_canvas_position(x_frac, y_frac)
+    to_canvas_position(real_position:RealPosition, view:ViewOfPlane){
+        
+        return new DynamicCanvasPosition(this,real_position,view)
+    }
+
+    to_cavas_colored_point(real_position:RealPosition, view_info:ViewOfPlane, color: string, size:number){
+        return new CanvasColoredPoint(this.to_canvas_position(real_position, view_info), color, size)
     }
 
 }
 
 
-interface Drawable{
+export interface Drawable{
     draw(c: CanvasRenderingContext2D):void
 }
 
 
-class CanvasPosition{
-    x_frac: number
-    y_frac: number
-    canvas_info: CanvasInfo
-    constructor(canvas_info:CanvasInfo ,x:number,y:number ){
-        this.x_frac = x
-        this.y_frac = y
-        this.canvas_info = canvas_info
-    }
+abstract class Positionable{
+    abstract pixel_x(): number
 
-    pixel_x(){
-        return this.canvas_info.get_width()*this.x_frac
-    }
+    abstract pixel_y():number
 
-    pixel_y(){
-        return this.canvas_info.get_height()*(1-this.y_frac)
+    abstract x_frac():number
+
+    abstract y_frac():number
+
+    draw(color:string, size:number, c: CanvasRenderingContext2D){
+        c.strokeStyle = color;
+        c.strokeRect(this.pixel_x(), this.pixel_y(), size, size)
     }
 }
 
+class FixedCanvasPosition extends Positionable{
+    x_frac0: number
+    y_frac0: number
+    canvas_info: CanvasInfo
+    constructor(canvas_info:CanvasInfo ,x:number,y:number ){
+        super()
+        this.x_frac0 = x
+        this.y_frac0 = y
+        this.canvas_info = canvas_info
+    }
+    x_frac(){
+        return this.x_frac0
+    }
+
+    y_frac(){
+        return this.y_frac0
+    }
+    
+    pixel_x(){
+        return this.canvas_info.get_width()*this.x_frac0
+    }
+
+    pixel_y(){
+        return this.canvas_info.get_height()*(1-this.y_frac0)
+    }
+}
+
+class DynamicCanvasPosition extends Positionable{
+
+    real_position :RealPosition
+    canvas_info: CanvasInfo
+    view: ViewOfPlane
+    constructor(canvas_info:CanvasInfo ,real_position: RealPosition, view: ViewOfPlane ){
+        super()
+        this.real_position = real_position
+        this.canvas_info = canvas_info
+        this.view = view
+    }
+
+    x_frac(): number {
+        return .5 + (this.real_position.x-this.view.center_point.x)/this.view.x_axis_length
+    }
+
+    y_frac(): number {
+        return .5 + (this.real_position.y-this.view.center_point.y)/this.view.y_axis_length
+    }
+
+    pixel_x(){
+        return this.canvas_info.get_width()*this.x_frac()
+    }
+
+    pixel_y(){
+        return this.canvas_info.get_height()*(1-this.y_frac())
+    }
+}
+
+class CanvasColoredPoint implements Drawable{
+    canvas_position :Positionable
+    color: string
+    size: number
+    constructor(canvas_position: Positionable, color: string, size:number){
+        this.canvas_position = canvas_position
+        this.color = color
+        this.size = size
+    }
+    draw(c: CanvasRenderingContext2D): void {
+        this.canvas_position.draw(this.color, this.size, c)
+    }
+
+
+    
+}
+
 class CanvasLine implements Drawable{
-    p1 :CanvasPosition
-    p2: CanvasPosition
+    p1 :FixedCanvasPosition
+    p2: FixedCanvasPosition
     line_width: number;
     stroke_style: string;
     draw_order: number; //the higher draw order the later it will be drawn
     canvas_info:CanvasInfo
-    constructor(canvas_info:CanvasInfo, p1:CanvasPosition,p2: CanvasPosition, line_width:number = 2, stroke_style:string = 'black', draw_order = 0){
+    constructor(canvas_info:CanvasInfo, p1:FixedCanvasPosition,p2: FixedCanvasPosition, line_width:number = 2, stroke_style:string = 'black', draw_order = 0){
         this.p1 = p1
         this.p2 = p2
         this.line_width = line_width
@@ -103,10 +175,10 @@ class CanvasLine implements Drawable{
 
 class Lable implements Drawable{
     label: string;
-    bottom_left: CanvasPosition;
+    bottom_left: FixedCanvasPosition;
     pixels: number;
 
-    constructor( label: string, bottom_left_location:CanvasPosition, pixels:number = 16){
+    constructor( label: string, bottom_left_location:FixedCanvasPosition, pixels:number = 16){
         this.label = label
         this.bottom_left = bottom_left_location
         this.pixels = pixels
@@ -187,12 +259,12 @@ export class ViewOfPlane{
         var y_intercepts = get_multiples_in_range(this.y_grid_line_resolution, this.y_min(), this.y_max())
         var lines: LabledLine[]= []
         x_intercepts.forEach(x_intercept => {
-            var x_frac = this.canvas_info.to_canvas_position(new RealPosition(x_intercept,0),this).x_frac 
+            var x_frac = this.canvas_info.to_canvas_position(new RealPosition(x_intercept,0),this).x_frac() 
             lines.push( this.canvas_info.get_labled_vertical_line(x_frac, String(x_intercept), x_intercept == 0? 'black': '#d3d3d3',x_intercept == 0? 1: 0 ))   
         });
 
         y_intercepts.forEach(y_intercept => {
-            var y_frac = this.canvas_info.to_canvas_position(new RealPosition(0, y_intercept),this).y_frac 
+            var y_frac = this.canvas_info.to_canvas_position(new RealPosition(0, y_intercept),this).y_frac() 
             lines.push(this.canvas_info.get_labled_horizontal_line(y_frac, String(y_intercept),  y_intercept == 0? 'black': '#d3d3d3'))
         });
 

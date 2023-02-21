@@ -1,14 +1,32 @@
 import {get_t} from './time'
-import { ViewOfPlane, RealPosition, CanvasInfo } from './draw';
+import { ViewOfPlane, RealPosition, CanvasInfo, Drawable } from './draw';
 let canvas2 = document.getElementById('canvas') as
                 HTMLCanvasElement;
 canvas2.width = .9*window.innerWidth
 canvas2.height = .9*window.innerHeight
 let c = canvas2.getContext("2d")!;
 
+var canvas_info = new CanvasInfo(canvas2)
+var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100, canvas_info)
+var some_point = new RealPosition(3,3)
+var colored_point = canvas_info.to_cavas_colored_point(some_point, plane, 'red', 2,)
 
-var plane = new ViewOfPlane(new RealPosition(0,0), 100, 100, new CanvasInfo(canvas2))
-plane.draw(c)
+var drawable_things: Drawable[] = []
+
+drawable_things.push(plane)
+drawable_things.push(colored_point)
+
+function draw(){
+    drawable_things.forEach(element => {
+        element.draw(c)
+    });
+}
+
+
+
+
+
+
 
 function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
     const rect = canvas.getBoundingClientRect()
@@ -47,10 +65,13 @@ document.addEventListener("keydown", function(event) {
     plane.draw(c)
   });
   
-// function animate(){
-//     requestAnimationFrame(animate)
-//     c.clearRect(0,0,innerWidth, innerHeight)
+function animate(){
+    requestAnimationFrame(animate)
+    c.clearRect(0,0,innerWidth, innerHeight)
+    some_point.x = 10*Math.sin(get_t())
+    some_point.y = 10*Math.cos(get_t())
+    draw()
     
-// }
+}
 
-// animate()
+animate()
