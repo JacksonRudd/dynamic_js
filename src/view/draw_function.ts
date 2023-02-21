@@ -2,7 +2,7 @@ import {get_t} from '../time'
 import { ViewOfPlane, CanvasInfo, Drawable } from './draw';
 import { RealPosition } from '../real';
 
-export function display(real_scene: RealPosition[], canvas: HTMLCanvasElement ){
+export function get_draw_function(real_scene: RealPosition[], canvas: HTMLCanvasElement ){
     canvas.width = .95*window.innerWidth
     canvas.height = .95*window.innerHeight
     let c = canvas.getContext("2d")!;
@@ -22,11 +22,7 @@ export function display(real_scene: RealPosition[], canvas: HTMLCanvasElement ){
     });
 
 
-    function draw(){
-        drawable_things.forEach(element => {
-            element.draw(c)
-        });
-    }
+
 
 
     function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
@@ -66,17 +62,15 @@ export function display(real_scene: RealPosition[], canvas: HTMLCanvasElement ){
         plane.draw(c)
     });
     
-    function animate(){
-        requestAnimationFrame(animate)
-        real_scene.forEach(element => {
-            element.x = element.x + element.y*Math.sin(get_t())/10
-            element.y = element.y -element.x/10
-        });
+
+    function draw(){
         c.clearRect(0,0,innerWidth, innerHeight)
 
-        draw()
-        
+        drawable_things.forEach(element => {
+            element.draw(c)
+        });
     }
-
-    animate()
+    return draw
 }
+
+
