@@ -3,7 +3,10 @@ import { RealPosition } from './real';
 import {get_draw_function} from './view/draw_function'
 
 
-
+function createMathFunction(expression: string): (x: number, y: number, t: number) => number {
+    const fn = new Function('x', 'y', 't', `return ${expression};`);
+    return (x: number, y: number, t: number): number => fn(x, y, t);
+  }
 
 class UpdateableScene{
     last_t:number = 0
@@ -41,15 +44,9 @@ for (let i = 0; i < 100; i++) {
     real_scene.push(new RealPosition(randomNum1, randomNum2))
 }
 
-function x_update(x:number,y:number, t:number){
-    return -y 
-}
 
-function y_update(x:number,y:number, t:number){
-    return x  
-}
 
-var scene = new UpdateableScene(real_scene, x_update, y_update)
+var scene = new UpdateableScene(real_scene, createMathFunction('y'), createMathFunction('x + x*y'))
 
 
 var draw = get_draw_function(real_scene, document.getElementById('canvas') as HTMLCanvasElement)
