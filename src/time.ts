@@ -1,11 +1,19 @@
 
-let start_seconds = new Date()
+function getTotalSecondsBetweenDates(earlier: Date, later: Date): number {
+    const millisecondsDiff = Math.abs(later.getTime() - earlier.getTime());
+    return millisecondsDiff/1000
+  }
 
+export class Timer{
+    start_seconds = new Date()
 
-function get_seconds(time: Date){
-    return time.getSeconds()+ time.getMilliseconds()/1000
+    
+    get_t() {
+        return getTotalSecondsBetweenDates(this.start_seconds, new Date())
+    }
+    
+    reset_t(){
+        this.start_seconds = new Date()
+    }
 }
 
-export function get_t() {
-    return get_seconds(new Date()) - get_seconds(start_seconds)
-}

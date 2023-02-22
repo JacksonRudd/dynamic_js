@@ -1,4 +1,3 @@
-import {get_t} from '../time'
 import { ViewOfPlane, CanvasInfo, Drawable } from './draw';
 import { RealPosition } from '../real';
 
