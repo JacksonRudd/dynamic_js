@@ -44,3 +44,5 @@
 
 # Implement Physics 
     - Points can attract each other
+
+# Bug: time delta becomes large when you navigate away from the page, which causes the points to explode. 
