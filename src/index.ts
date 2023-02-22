@@ -24,14 +24,8 @@ class UpdateableScene{
         real_scene.forEach(element => {
             element.x += this.x_update(element.x, element.y, t)*delta
             element.y += this.y_update(element.x, element.y, t)*delta
-            if (element.x > 10000) {
-                console.log(element)
-                console.log()
-            }
         });
-        if (delta > 10){
-            console.log(delta)
-        }
+        
         this.last_t = t
     }
 }
@@ -41,7 +35,7 @@ class UpdateableScene{
 var real_scene: RealPosition[] = []
 
 
-for (let i = 0; i < 100000; i++) {
+for (let i = 0; i < 100; i++) {
     var randomNum1 = Math.floor(Math.random() * (100 - (-100) + 1)) + (-100);
     var randomNum2 = Math.floor(Math.random() * (100 - (-100) + 1)) + (-100);
     real_scene.push(new RealPosition(randomNum1, randomNum2))

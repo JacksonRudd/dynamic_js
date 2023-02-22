@@ -28,7 +28,6 @@ export function get_draw_function(real_scene: RealPosition[], canvas: HTMLCanvas
         const rect = canvas.getBoundingClientRect()
         const x = event.clientX - rect.left
         const y = event.clientY - rect.top
-        console.log("x: " + x + " y: " + y)
     }
 
     canvas.addEventListener('mousedown', function(e) {
