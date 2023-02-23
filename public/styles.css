@@ -1,0 +1,52 @@
+/* Set font family and size */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  
+  /* Center the main content */
+  main {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+  }
+  
+  /* Style the input labels */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  /* Style the input fields */
+  input[type="text"] {
+    width: 40%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: inline-block;
+  }
+  
+  /* Style the button */
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  /* Style the canvas */
+  canvas {
+    border: 1px solid #d3d3d3;
+    width: 90%;
+    margin-top: 20px;
+  }
+  
