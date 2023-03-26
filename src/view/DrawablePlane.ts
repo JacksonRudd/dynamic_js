@@ -20,13 +20,17 @@ export class DrawablePlane {
         this.drawable_things = [this.view_of_plane];
     }
 
-    add_real_scene(real_scene: RealPosition[]) {
-        real_scene.forEach(element => {
-            var colored_point = this.canvas_info.to_cavas_colored_point(element, this.view_of_plane, 'red', 3);
-            this.drawable_things.push(colored_point);
-        });
+    add_drawables(drawables: Drawable[]){
+        drawables.forEach(
+            element => {this.drawable_things.push(element)}
+        )
     }
 
+    add_real_point(element:RealPosition, color='red', size=3){
+        this.drawable_things.push(
+            this.canvas_info.to_cavas_colored_point(element, this.view_of_plane, color, size)
+        )
+    }
     draw() {
         this.canvas.getContext("2d")!.clearRect(0, 0, innerWidth, innerHeight);
         this.drawable_things.forEach(element => {

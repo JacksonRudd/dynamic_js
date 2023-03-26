@@ -2,7 +2,12 @@ import { RealPosition } from "./RealPosition";
 import { Timer } from "./Timer";
 
 
-export class UpdateableScene {
+export interface IScene{
+    update(): void
+    get_real_points(): RealPosition[]
+}
+
+export class UpdateableScene implements IScene {
     last_t: number = 0;
     timer = new Timer();
     list_of_points: RealPosition[];
@@ -14,8 +19,11 @@ export class UpdateableScene {
         this.x_update = x_update_func;
         this.y_update = y_update_func;
     }
+    get_real_points(): RealPosition[] {
+        return this.list_of_points
+    }
 
-    update() {
+    update(): void {
         var t = this.timer.get_t();
         var delta = t - this.last_t;
         this.list_of_points.forEach(element => {
