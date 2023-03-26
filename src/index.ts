@@ -1,7 +1,8 @@
 import {UpdateableScene} from './scene'
 import { RealPosition } from './real';
-import {ControllableDrawablePlane, DrawablePlane} from './view/draw_function'
-import { CanvasInfo, ViewOfPlane } from './view/draw';
+import { ControllableDrawablePlane } from "./view/ControllableDrawablePlane";
+import { ViewOfPlane } from "./view/ViewOfPlane";
+import { CanvasInfo } from './view/CanvasInfo';
 
 
 function createMathFunction(expression: string): (x: number, y: number, t: number) => number {
