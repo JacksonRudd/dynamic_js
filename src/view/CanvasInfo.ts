@@ -1,4 +1,4 @@
-import { RealPosition } from '../real';
+import { RealPosition } from "../RealPosition";
 import { CanvasColoredPoint } from "./CanvasColoredPoint";
 import { CanvasLine } from './CanvasLine';
 import { DynamicCanvasPosition } from "./DynamicCanvasPosition";

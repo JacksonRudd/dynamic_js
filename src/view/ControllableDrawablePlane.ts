@@ -1,4 +1,4 @@
-import { RealPosition } from '../real';
+import { RealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
 import {DrawablePlane} from './DrawablePlane'
 

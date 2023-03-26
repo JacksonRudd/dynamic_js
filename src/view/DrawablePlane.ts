@@ -1,6 +1,6 @@
 import { Drawable } from "./Drawable";
 import { CanvasInfo } from "./CanvasInfo";
-import { RealPosition } from '../real';
+import { RealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
 
 export class DrawablePlane {

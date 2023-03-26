@@ -1,4 +1,4 @@
-import { RealPosition } from '../real';
+import { RealPosition } from "../RealPosition";
 import { CanvasInfo } from './CanvasInfo';
 import { Positionable } from './Positionable';
 import { ViewOfPlane } from "./ViewOfPlane";

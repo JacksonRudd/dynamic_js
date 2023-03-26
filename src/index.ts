@@ -1,5 +1,5 @@
-import {UpdateableScene} from './scene'
-import { RealPosition } from './real';
+import { UpdateableScene } from "./UpdateableScene";
+import { RealPosition } from "./RealPosition";
 import { ControllableDrawablePlane } from "./view/ControllableDrawablePlane";
 import { ViewOfPlane } from "./view/ViewOfPlane";
 import { CanvasInfo } from './view/CanvasInfo';
