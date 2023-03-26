@@ -1,6 +1,7 @@
 import {UpdateableScene} from './scene'
 import { RealPosition } from './real';
-import {get_draw_function} from './view/draw_function'
+import {ControllableDrawablePlane, DrawablePlane} from './view/draw_function'
+import { CanvasInfo, ViewOfPlane } from './view/draw';
 
 
 function createMathFunction(expression: string): (x: number, y: number, t: number) => number {
@@ -21,22 +22,30 @@ function create_scene(input1: string, input2:string){
     return new UpdateableScene(real_scene, createMathFunction(input1), createMathFunction(input2))
 
 }
+var canvas = document.getElementById('canvas') as HTMLCanvasElement
+var canvas_info = new CanvasInfo(canvas)
+canvas.width = .95*window.innerWidth
+canvas.height = .95*window.innerHeight
 
-get_draw_function([], document.getElementById('canvas') as HTMLCanvasElement)()
+
+
+var draw_plane = new ControllableDrawablePlane(new ViewOfPlane(new RealPosition(0,0), 100, 100, canvas_info),[], canvas)
+draw_plane.draw()
 // add an event listener to the button
 button.addEventListener('click', function() {
     // get the values of the user inputs
+    draw_plane.clear()
+    draw_plane.add_arrow_key_controls()
     const input1 = document.getElementById('input1') as HTMLInputElement;
     const input2 = document.getElementById('input2') as HTMLInputElement;
 
     var scene = create_scene(input1.value, input2.value)
+    draw_plane.add_real_scene(scene.list_of_points)
     
-    var draw = get_draw_function(scene.list_of_points, document.getElementById('canvas') as HTMLCanvasElement)
-
     function animate(){
         requestAnimationFrame(animate)
         scene.update()
-        draw()  
+        draw_plane.draw()  
     }
     animate()
 
