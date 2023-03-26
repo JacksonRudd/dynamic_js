@@ -1,3 +1,3 @@
 ## Intro 
 
-This is a simply project for visualizing dynamical systems in the browser. 
+This is a simple project for visualizing dynamical systems in the browser. 
