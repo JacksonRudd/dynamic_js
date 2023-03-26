@@ -1,25 +1,20 @@
 
+
 # Ability to solve 2d differential Equations
-
-    ## Add Real Update
-    - use time delta
-    - allow reset of points 
-    - allow reset of time
-
     ## User can change the screens on the board
     - click and add point 
     - add random points in view
+    
+    ## View can be set before the visualistion
 
-    ## User input of F
-    - including possibility of stockastic additions
-    - should it be typescript? Or a latex script?
-
-    ## Implement F in mathematical notation
-    - Latex formatting 
-    - small transpiler
-
+    ## Add Real Update
+    - allow reset of points 
+    - allow reset of time
+    
     ## Show t on the sceen 
     - Ability to slow down or speed up t
+
+# Break up 'Get Draw' function
 
 # Ability to solve higher dim diffy Q's
 
@@ -44,5 +39,8 @@
 
 # Implement Physics 
     - Points can attract each other
+
+# Efficient Visauals
+    - use a Q tree to only display points I need
 
 # Bug: time delta becomes large when you navigate away from the page, which causes the points to explode. 

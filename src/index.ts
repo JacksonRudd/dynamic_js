@@ -8,19 +8,7 @@ function createMathFunction(expression: string): (x: number, y: number, t: numbe
     return (x: number, y: number, t: number): number => fn(x, y, t);
   }
 
-
-
-
 const button = document.getElementById('start') as HTMLButtonElement;
-
-
-
-
-
-
-
-
-
 
 function create_scene(input1: string, input2:string){
     var real_scene: RealPosition[] = []

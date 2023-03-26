@@ -20,10 +20,6 @@ export function get_draw_function(real_scene: RealPosition[], canvas: HTMLCanvas
 
     });
 
-
-
-
-
     function getCursorPosition(canvas: HTMLCanvasElement, event:any) {
         const rect = canvas.getBoundingClientRect()
         const x = event.clientX - rect.left
