@@ -5,7 +5,6 @@ import { CanvasInfo } from './view/CanvasInfo';
 import { ViewableScene } from "./ViewableScene";
 import { DefaultRealPositionViz } from "./IRealPositionViz";
 import { CreateUpdateableSceneWithPlainTextEquations } from "./CreateUpdateableSceneWithPlaintText";
-import { RandomGenerator } from "./PointGenerator";
 
 var canvas = document.getElementById('canvas') as HTMLCanvasElement
 var canvas_info = new CanvasInfo(canvas)
@@ -17,7 +16,7 @@ draw_plane.add_arrow_key_controls()
 draw_plane.draw()
 // add an event listener to the button
 
-var scene_factory = new CreateUpdateableSceneWithPlainTextEquations(new RandomGenerator(100,-100, 100, -100, 1000))
+var scene_factory = new CreateUpdateableSceneWithPlainTextEquations()
 function create_viewable_scene(){
     draw_plane.clear()
     var scene = scene_factory.create_update_scene_from_html()

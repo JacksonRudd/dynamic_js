@@ -1,5 +1,5 @@
-import { RealPosition } from "./RealPosition";
-import { Timer } from "./Timer";
+import { RealPosition } from "../RealPosition";
+import { Timer } from "../Timer";
 
 
 export interface IScene{

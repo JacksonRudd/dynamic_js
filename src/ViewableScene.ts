@@ -1,4 +1,4 @@
-import { IScene, UpdateableScene } from "./UpdateableScene";
+import { IScene } from "./updateable_scene/UpdateableScene";
 import { DrawablePlane } from "./view/DrawablePlane";
 import { draw_plane } from "./index";
 import { IRealPositionViz } from "./IRealPositionViz";
