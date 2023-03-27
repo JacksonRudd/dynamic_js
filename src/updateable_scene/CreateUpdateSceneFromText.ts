@@ -3,7 +3,6 @@ import { RandomGenerator } from "../PointGenerator";
 
 export class CreateUpdateSceneFromText {
 
-
     create_update_scene_from_equation_text(input1: string, input2: string) {
 
         return new UpdateableScene(

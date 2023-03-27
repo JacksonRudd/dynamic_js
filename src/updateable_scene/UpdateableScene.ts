@@ -1,11 +1,7 @@
 import { RealPosition } from "../RealPosition";
 import { Timer } from "../Timer";
+import { IScene } from "../IScene";
 
-
-export interface IScene{
-    update(): void
-    get_real_points(): RealPosition[]
-}
 
 export class UpdateableScene implements IScene {
     last_t: number = 0;

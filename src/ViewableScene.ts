@@ -1,6 +1,5 @@
-import { IScene } from "./updateable_scene/UpdateableScene";
+import { IScene } from "./IScene";
 import { DrawablePlane } from "./view/DrawablePlane";
-import { draw_plane } from "./index";
 import { IRealPositionViz } from "./IRealPositionViz";
 
 export class ViewableScene {
@@ -13,7 +12,7 @@ export class ViewableScene {
         this.real_scene = real_scene;
         this.how_to_view = how_to_view
         this.real_scene.get_real_points().forEach(real_point => {
-            draw_plane.add_real_point(
+            this.drawable_plane.add_real_point(
                 this.how_to_view.get_real_position_position(real_point), 
                 this.how_to_view.get_real_point_color(real_point), 
                 this.how_to_view.get_real_point_size(real_point));
