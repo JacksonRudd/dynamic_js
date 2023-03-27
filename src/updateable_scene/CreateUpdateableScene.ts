@@ -2,10 +2,11 @@ import { IScene } from "../IScene";
 import { CreateUpdateSceneFromText } from "./CreateUpdateSceneFromText";
 import { ISceneCreator } from "../ISceneCreator";
 
-export class CreateUpdateableSceneWithPlainTextEquations implements ISceneCreator {
-    
-    constructor(){
-        this.set_up_html()
+
+export class CreateUpdateableScene implements ISceneCreator {
+
+    constructor() {
+        this.set_up_html();
     }
 
     create_scene(): IScene {
@@ -14,7 +15,7 @@ export class CreateUpdateableSceneWithPlainTextEquations implements ISceneCreato
         return new CreateUpdateSceneFromText().create_update_scene_from_equation_text(input1.value, input2.value);
     }
 
-    private create_labled_field(field_id:string, field_prompt: string, field_type: string){
+    private create_labled_field(field_id: string, field_prompt: string, field_type: string) {
         const scene = document.getElementById("scene")!;
         const label1 = document.createElement("label");
         label1.setAttribute("for", field_id);
@@ -26,14 +27,9 @@ export class CreateUpdateableSceneWithPlainTextEquations implements ISceneCreato
         scene.appendChild(input1);
     }
 
-    private set_up_html(){
-        this.create_labled_field("input1", "x update:", "text")
-        this.create_labled_field("input2", "y update:", "text")
+    private set_up_html() {
+        this.create_labled_field("input1", "x update:", "text");
+        this.create_labled_field("input2", "y update:", "text");
     }
 
-
-
-
 }
-
-
