@@ -1,8 +1,7 @@
-import { UpdateableScene } from "./UpdateableScene";
 import { PointGenerator, RandomGenerator } from "./PointGenerator";
+import { CreateUpdateSceneFromText } from "./CreateUpdateSceneFromText";
 
-
-export class CreateUpdateableSceneWithPlaintTextEquations {
+ export class CreateUpdateableSceneWithPlainTextEquations {
     random_generator: PointGenerator;
     
     constructor(random_generator: PointGenerator){
@@ -37,17 +36,8 @@ export class CreateUpdateableSceneWithPlaintTextEquations {
     create_update_scene_from_html() {
         const input1 = document.getElementById('input1') as HTMLInputElement;
         const input2 = document.getElementById('input2') as HTMLInputElement;
-        return this.create_update_scene_from_equation_text(input1.value, input2.value);
-    }
-
-    private createMathFunction(expression: string): (x: number, y: number, t: number) => number {
-        const fn = new Function('x', 'y', 't', `return ${expression};`);
-        return (x: number, y: number, t: number): number => fn(x, y, t);
+        return new CreateUpdateSceneFromText().create_update_scene_from_equation_text(input1.value, input2.value, this.random_generator);
     }
 
 
-    private create_update_scene_from_equation_text(input1: string, input2: string) {
-
-        return new UpdateableScene(this.random_generator.generate_points(), this.createMathFunction(input1), this.createMathFunction(input2));
-    }
 }
