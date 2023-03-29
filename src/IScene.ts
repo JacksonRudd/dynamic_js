@@ -1,9 +1,11 @@
-import { RealPosition } from "./RealPosition";
+import { IRealPosition } from "./RealPosition";
 
 
-export interface IPointable{
-    get_real_position_position(): RealPosition;
-    
+export interface IPointable extends IRealPosition{
+    get_x(): number 
+
+    get_y(): number 
+
     get_real_point_color(): string;
 
     get_real_point_size(): number;

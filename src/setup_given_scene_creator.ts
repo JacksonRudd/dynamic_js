@@ -1,4 +1,4 @@
-import { RealPosition } from "./RealPosition";
+import { IRealPosition } from "./RealPosition";
 import { ControllableDrawablePlane } from "./view/ControllableDrawablePlane";
 import { ViewOfPlane } from "./view/ViewOfPlane";
 import { StationaryPosition } from "./view/StationaryPosition";

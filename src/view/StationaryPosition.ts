@@ -1,8 +1,8 @@
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 
 
 
-export class StationaryPosition implements RealPosition {
+export class StationaryPosition implements IRealPosition {
 
     x: any;
     y: any;

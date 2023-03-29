@@ -1,4 +1,4 @@
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { CanvasInfo } from './CanvasInfo';
 import { Positionable } from './Positionable';
 import { ViewOfPlane } from "./ViewOfPlane";
@@ -7,10 +7,10 @@ import { ViewOfPlane } from "./ViewOfPlane";
 
 export class DynamicCanvasPosition extends Positionable {
 
-    real_position: RealPosition;
+    real_position: IRealPosition;
     canvas_info: CanvasInfo;
     view: ViewOfPlane;
-    constructor(canvas_info: CanvasInfo, real_position: RealPosition, view: ViewOfPlane) {
+    constructor(canvas_info: CanvasInfo, real_position: IRealPosition, view: ViewOfPlane) {
         super();
         this.real_position = real_position;
         this.canvas_info = canvas_info;

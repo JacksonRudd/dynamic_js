@@ -1,6 +1,6 @@
 import { Drawable } from "./Drawable";
 import { CanvasInfo } from "./CanvasInfo";
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
 import { IPointable } from "../IScene";
 
@@ -11,7 +11,7 @@ export class DrawablePlane {
     canvas: HTMLCanvasElement;
     canvas_info: CanvasInfo;
 
-    constructor(view: ViewOfPlane, real_scene: RealPosition[], canvas: HTMLCanvasElement) {
+    constructor(view: ViewOfPlane, real_scene: IRealPosition[], canvas: HTMLCanvasElement) {
         this.view_of_plane = view;
         this.canvas = canvas;
         this.canvas_info = new CanvasInfo(canvas);
@@ -28,7 +28,7 @@ export class DrawablePlane {
         )
     }
 
-    add_real_point(element:RealPosition, color='red', size=3){
+    add_real_point(element:IRealPosition, color='red', size=3){
         this.drawable_things.push(
             this.canvas_info.to_cavas_colored_point(element, this.view_of_plane, color, size)
         )

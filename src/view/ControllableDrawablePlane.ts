@@ -1,10 +1,10 @@
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
 import {DrawablePlane} from './DrawablePlane'
 
 export class ControllableDrawablePlane extends DrawablePlane {
 
-    constructor(view: ViewOfPlane, real_scene: RealPosition[], canvas: HTMLCanvasElement) {
+    constructor(view: ViewOfPlane, real_scene: IRealPosition[], canvas: HTMLCanvasElement) {
         super(view, real_scene, canvas);
         this.add_arrow_key_controls();
     }

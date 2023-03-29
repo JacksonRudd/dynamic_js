@@ -1,8 +1,8 @@
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { IPointable } from "../IScene";
 import { ScenePosition } from "./ScenePosition";
 
-export class PhaseDisplayPoint implements IPointable, RealPosition {
+export class PhaseDisplayPoint implements IPointable, IRealPosition {
     real_position: ScenePosition;
 
     constructor(real_position: ScenePosition) {
@@ -14,10 +14,7 @@ export class PhaseDisplayPoint implements IPointable, RealPosition {
     get_y(): number {
         return this.real_position.y;
     }
-
-    get_real_position_position(): RealPosition {
-        return this;
-    }
+    
     get_real_point_color(): string {
         return 'red';
     }

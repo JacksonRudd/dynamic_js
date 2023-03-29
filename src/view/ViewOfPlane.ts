@@ -1,5 +1,5 @@
 import { get_multiples_in_range } from "../math_utility";
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { CanvasInfo } from "./CanvasInfo";
 import { LabledLine } from "./LabledLine";
 import { StationaryPosition } from "./StationaryPosition";

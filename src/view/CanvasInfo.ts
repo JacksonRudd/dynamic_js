@@ -1,5 +1,5 @@
 import { IPointable } from "../IScene";
-import { RealPosition } from "../RealPosition";
+import { IRealPosition } from "../RealPosition";
 import { CanvasColoredPoint } from "./CanvasColoredPoint";
 import { CanvasLine } from './CanvasLine';
 import { DynamicCanvasPosition } from "./DynamicCanvasPosition";
@@ -49,17 +49,17 @@ export class CanvasInfo {
         return new LabledLine(lable, line);
     }
 
-    to_canvas_position(real_position: RealPosition, view: ViewOfPlane) {
+    to_canvas_position(real_position: IRealPosition, view: ViewOfPlane) {
 
         return new DynamicCanvasPosition(this, real_position, view);
     }
 
-    to_cavas_colored_point(real_position: RealPosition, view_info: ViewOfPlane, color: string, size: number) {
+    to_cavas_colored_point(real_position: IRealPosition, view_info: ViewOfPlane, color: string, size: number) {
         return new CanvasColoredPoint(this.to_canvas_position(real_position, view_info), color, size);
     }
 
     pointable_to_cavas_colored_point(pointable: IPointable, view_info: ViewOfPlane) {
-        return this.to_cavas_colored_point(pointable.get_real_position_position(), view_info, pointable.get_real_point_color(), pointable.get_real_point_size())
+        return this.to_cavas_colored_point(pointable, view_info, pointable.get_real_point_color(), pointable.get_real_point_size())
     }
 
 }
