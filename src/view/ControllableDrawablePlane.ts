@@ -19,7 +19,7 @@ export class ControllableDrawablePlane extends DrawablePlane {
                     view.x_axis_length -= 10;
                     view.y_axis_length -= 10;
                 } else {
-                    view.center_point.y += view.y_axis_length / 100;
+                    view.center_point.add_to_y(view.y_axis_length / 100);
                 }
             } else if (event.key === "ArrowDown") {
                 if (event.ctrlKey) {
@@ -27,12 +27,13 @@ export class ControllableDrawablePlane extends DrawablePlane {
                     view.y_axis_length += 10;
 
                 } else {
-                    view.center_point.y -= view.y_axis_length / 100;
+                    view.center_point.add_to_y(-view.y_axis_length / 100);
                 }
             } else if (event.key === "ArrowLeft") {
-                view.center_point.x -= view.x_axis_length / 100;
+                view.center_point.add_to_x(-view.x_axis_length / 100);
+
             } else if (event.key === "ArrowRight") {
-                view.center_point.x += view.x_axis_length / 100;
+                view.center_point.add_to_x(view.x_axis_length / 100);
             }
             c.clearRect(0, 0, innerWidth, innerHeight);
             view.draw(c);

@@ -1,9 +1,7 @@
-import { RealPosition } from "./RealPosition";
+import { ScenePosition } from "./ScenePosition";
 
-export interface PointGenerator {
-    generate_points(): RealPosition[];
-}
-export class RandomGenerator implements PointGenerator {
+
+export class RandomGenerator {
     x_min: number;
     x_max: number;
     y_min: number;
@@ -17,12 +15,12 @@ export class RandomGenerator implements PointGenerator {
         this.y_max = y_max;
         this.num_of_points = num_of_points;
     }
-    generate_points(): RealPosition[] {
-        var to_return: RealPosition[] = [];
+    generate_points(): ScenePosition[] {
+        var to_return: ScenePosition[] = [];
         for (let i = 0; i < this.num_of_points; i++) {
             var randomNum1 = Math.floor(Math.random() * (this.x_max - (this.x_min) + 1)) + (this.x_min);
             var randomNum2 = Math.floor(Math.random() * (this.y_max - (this.y_min) + 1)) + (this.y_min);
-            to_return.push(new RealPosition(randomNum1, randomNum2));
+            to_return.push(new ScenePosition(randomNum1, randomNum2));
         }
         return to_return;
     }

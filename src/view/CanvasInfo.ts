@@ -1,3 +1,4 @@
+import { IPointable } from "../IScene";
 import { RealPosition } from "../RealPosition";
 import { CanvasColoredPoint } from "./CanvasColoredPoint";
 import { CanvasLine } from './CanvasLine';
@@ -55,6 +56,10 @@ export class CanvasInfo {
 
     to_cavas_colored_point(real_position: RealPosition, view_info: ViewOfPlane, color: string, size: number) {
         return new CanvasColoredPoint(this.to_canvas_position(real_position, view_info), color, size);
+    }
+
+    pointable_to_cavas_colored_point(pointable: IPointable, view_info: ViewOfPlane) {
+        return this.to_cavas_colored_point(pointable.get_real_position_position(), view_info, pointable.get_real_point_color(), pointable.get_real_point_size())
     }
 
 }

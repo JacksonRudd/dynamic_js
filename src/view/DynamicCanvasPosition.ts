@@ -18,11 +18,11 @@ export class DynamicCanvasPosition extends Positionable {
     }
 
     x_frac(): number {
-        return .5 + (this.real_position.x - this.view.center_point.x) / this.view.x_axis_length;
+        return .5 + (this.real_position.get_x() - this.view.center_point.get_x()) / this.view.x_axis_length;
     }
 
     y_frac(): number {
-        return .5 + (this.real_position.y - this.view.center_point.y) / this.view.y_axis_length;
+        return .5 + (this.real_position.get_y() - this.view.center_point.get_y()) / this.view.y_axis_length;
     }
 
     pixel_x() {

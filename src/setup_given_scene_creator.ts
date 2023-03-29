@@ -1,6 +1,7 @@
 import { RealPosition } from "./RealPosition";
 import { ControllableDrawablePlane } from "./view/ControllableDrawablePlane";
 import { ViewOfPlane } from "./view/ViewOfPlane";
+import { StationaryPosition } from "./view/StationaryPosition";
 import { CanvasInfo } from './view/CanvasInfo';
 import { ViewableScene } from "./ViewableScene";
 import { ISceneCreator } from "./ISceneCreator";
@@ -11,7 +12,7 @@ export function setup_given_scene_creator(scene_factory: ISceneCreator) {
     canvas.width = .95 * window.innerWidth;
     canvas.height = .95 * window.innerHeight;
 
-    var draw_plane = new ControllableDrawablePlane(new ViewOfPlane(new RealPosition(0, 0), 100, 100, canvas_info), [], canvas);
+    var draw_plane = new ControllableDrawablePlane(new ViewOfPlane(new StationaryPosition(0, 0), 100, 100, canvas_info), [], canvas);
     draw_plane.add_arrow_key_controls();
     draw_plane.draw();
     // add an event listener to the button

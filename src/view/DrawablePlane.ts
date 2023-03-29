@@ -2,8 +2,10 @@ import { Drawable } from "./Drawable";
 import { CanvasInfo } from "./CanvasInfo";
 import { RealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
+import { IPointable } from "../IScene";
 
 export class DrawablePlane {
+
     view_of_plane: ViewOfPlane;
     drawable_things: Drawable[] = [];
     canvas: HTMLCanvasElement;
@@ -31,6 +33,13 @@ export class DrawablePlane {
             this.canvas_info.to_cavas_colored_point(element, this.view_of_plane, color, size)
         )
     }
+
+    add_ipointable(real_point: IPointable) {
+        this.drawable_things.push(
+            this.canvas_info.pointable_to_cavas_colored_point(real_point, this.view_of_plane)
+        )
+    }
+
     draw() {
         this.canvas.getContext("2d")!.clearRect(0, 0, innerWidth, innerHeight);
         this.drawable_things.forEach(element => {

@@ -8,12 +8,7 @@ export class ViewableScene {
     constructor(drawable_plane: DrawablePlane, real_scene: IScene) {
         this.drawable_plane = drawable_plane;
         this.real_scene = real_scene;
-        this.real_scene.get_real_points().forEach(real_point => {
-            this.drawable_plane.add_real_point(
-                real_point.get_real_position_position(), 
-                real_point.get_real_point_color(), 
-                real_point.get_real_point_size());
-        });
+        this.real_scene.get_real_points().forEach(real_point => {this.drawable_plane.add_ipointable(real_point);})
     }
 
     step() {
