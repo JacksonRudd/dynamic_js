@@ -1,5 +1,6 @@
 import { Timer } from "../Timer";
-import { IPointable, IScene } from "../IScene";
+import { IScene } from "../IScene";
+import { IPointable } from "../IPointable";
 import { ScenePosition } from "./ScenePosition";
 import { PhaseDisplayPoint } from "./PhaseDisplayPoint";
 

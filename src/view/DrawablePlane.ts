@@ -2,7 +2,7 @@ import { Drawable } from "./Drawable";
 import { CanvasInfo } from "./CanvasInfo";
 import { IRealPosition } from "../RealPosition";
 import { ViewOfPlane } from "./ViewOfPlane";
-import { IPointable } from "../IScene";
+import { IPointable } from "../IPointable";
 
 export class DrawablePlane {
 

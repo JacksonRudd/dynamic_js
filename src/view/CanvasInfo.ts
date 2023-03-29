@@ -1,4 +1,4 @@
-import { IPointable } from "../IScene";
+import { IPointable } from "../IPointable";
 import { IRealPosition } from "../RealPosition";
 import { CanvasColoredPoint } from "./CanvasColoredPoint";
 import { CanvasLine } from './CanvasLine';

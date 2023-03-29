@@ -1,5 +1,5 @@
 import { IRealPosition } from "../RealPosition";
-import { IPointable } from "../IScene";
+import { IPointable } from "../IPointable";
 import { ScenePosition } from "./ScenePosition";
 
 export class PhaseDisplayPoint implements IPointable, IRealPosition {
