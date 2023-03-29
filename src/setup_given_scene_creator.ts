@@ -3,7 +3,6 @@ import { ControllableDrawablePlane } from "./view/ControllableDrawablePlane";
 import { ViewOfPlane } from "./view/ViewOfPlane";
 import { CanvasInfo } from './view/CanvasInfo';
 import { ViewableScene } from "./ViewableScene";
-import { DefaultRealPositionViz } from "./IRealPositionViz";
 import { ISceneCreator } from "./ISceneCreator";
 
 export function setup_given_scene_creator(scene_factory: ISceneCreator) {
@@ -19,7 +18,7 @@ export function setup_given_scene_creator(scene_factory: ISceneCreator) {
     function create_viewable_scene() {
         draw_plane.clear();
         var scene = scene_factory.create_scene();
-        return new ViewableScene(draw_plane, scene, new DefaultRealPositionViz());
+        return new ViewableScene(draw_plane, scene);
     }
 
     const button = document.getElementById('start') as HTMLButtonElement;

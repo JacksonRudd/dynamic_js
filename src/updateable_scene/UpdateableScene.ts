@@ -1,7 +1,35 @@
 import { RealPosition } from "../RealPosition";
 import { Timer } from "../Timer";
-import { IScene } from "../IScene";
+import { IPointable, IScene } from "../IScene";
 
+
+class PhaseDisplayPoint implements IPointable{
+    real_position: RealPosition;
+    
+    constructor(real_position: RealPosition){
+        this.real_position = real_position
+    }
+    
+    get_real_position_position(): RealPosition {
+        return this.real_position;
+    }
+    get_real_point_color(): string {
+        return 'red'
+    }
+    get_real_point_size(): number {
+        return 3
+    }
+    
+} 
+
+class ScenePosition{
+    x:number
+    y:number
+    constructor(x:number,y:number){
+        this.x = x
+        this.y = y
+    }
+}
 
 export class UpdateableScene implements IScene {
     last_t: number = 0;
@@ -15,8 +43,8 @@ export class UpdateableScene implements IScene {
         this.x_update = x_update_func;
         this.y_update = y_update_func;
     }
-    get_real_points(): RealPosition[] {
-        return this.list_of_points
+    get_real_points(): IPointable[] {
+        return this.list_of_points.map(element => new PhaseDisplayPoint(element))
     }
 
     update(): void {
